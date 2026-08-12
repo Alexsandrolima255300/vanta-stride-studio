@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 
 type TiltedCardProps = {
   imageSrc: string;
@@ -7,9 +7,10 @@ type TiltedCardProps = {
   className?: string;
   rotateAmplitude?: number;
   scaleOnHover?: number;
+  showMobileWarning?: boolean;
   showTooltip?: boolean;
   displayOverlayContent?: boolean;
-  overlayContent?: React.ReactNode;
+  overlayContent?: ReactNode;
 };
 
 export default function TiltedCard({
@@ -19,6 +20,7 @@ export default function TiltedCard({
   className = "",
   rotateAmplitude = 12,
   scaleOnHover = 1.05,
+  showMobileWarning: _showMobileWarning = false,
   showTooltip = true,
   displayOverlayContent = false,
   overlayContent,
@@ -54,6 +56,7 @@ export default function TiltedCard({
   const cardStyle: CSSProperties = {
     transform,
     transformStyle: "preserve-3d",
+    transition: "transform 120ms ease-out",
   };
 
   return (
@@ -71,7 +74,7 @@ export default function TiltedCard({
         height={900}
         loading="lazy"
         draggable={false}
-        className="aspect-square w-full object-cover select-none"
+        className="aspect-square w-full select-none object-cover"
       />
 
       <div
