@@ -7,10 +7,11 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Button } from "@/components/ui/button";
 import { brl, type Product } from "@/lib/products";
 import TiltedCard from "@/components/vanta/TiltedCard";
-import { VantaLogo } from "@/components/vanta/VantaLogo";
+import { ShoeBrandOverlay } from "@/components/vanta/ShoeBrandOverlay";
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [quickView, setQuickView] = useState(false);
+  const lightTone = product.color === "Branco";
 
   return (
     <motion.article
@@ -22,16 +23,17 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     >
       <div className="relative overflow-hidden rounded-sm bg-card">
         <Link to="/produto/$slug" params={{ slug: product.slug }} className="block">
-          <TiltedCard imageSrc={product.image} altText={product.name} captionText={product.name} rotateAmplitude={12} scaleOnHover={1.05} showMobileWarning={false} showTooltip />
+          <TiltedCard
+            imageSrc={product.image}
+            altText={product.name}
+            captionText={product.name}
+            rotateAmplitude={12}
+            scaleOnHover={1.05}
+            showMobileWarning={false}
+            showTooltip
+          />
+          <ShoeBrandOverlay tone={lightTone ? "light" : "dark"} />
         </Link>
-
-        {/* VANTA signature: a subtle embossed/engraved mark that follows the sneaker image */}
-        <div className="pointer-events-none absolute right-[12%] top-[38%] z-20 opacity-70 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-95">
-          <div className="relative rounded-full p-1.5 text-black/80 drop-shadow-[0_1px_1px_rgba(255,255,255,0.45)]">
-            <VantaLogo href={false} compact className="scale-[0.58] origin-center" />
-            <span className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.32),inset_0_-2px_3px_rgba(0,0,0,0.5)]" />
-          </div>
-        </div>
 
         <div className="pointer-events-none absolute left-4 top-4 z-20 flex gap-2">
           {product.novo && <span className="bg-accent px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground">Novo</span>}
@@ -61,9 +63,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       <Dialog open={quickView} onOpenChange={setQuickView}>
         <DialogContent className="max-w-3xl overflow-hidden border-border bg-card p-0">
           <div className="grid md:grid-cols-2">
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <img src={product.image} alt={product.name} width={900} height={900} loading="lazy" className="aspect-square w-full object-cover" />
-              <div className="pointer-events-none absolute right-[15%] top-[40%] opacity-70 mix-blend-soft-light"><VantaLogo href={false} compact className="scale-75" /></div>
+              <ShoeBrandOverlay tone={lightTone ? "light" : "dark"} compact />
             </div>
             <div className="flex flex-col justify-center gap-4 p-8">
               <DialogTitle className="font-display text-3xl font-extrabold uppercase tracking-tight">{product.name}</DialogTitle>
