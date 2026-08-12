@@ -15,12 +15,15 @@ const whatsappUrl = "https://wa.me/5534991401087?text=Ol%C3%A1%20VANTA!%20Gostar
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
+  const openWhatsApp = () => {
+    window.location.href = whatsappUrl;
+  };
+
   return (
     <>
       <header className="absolute inset-x-0 top-0 z-50 border-b border-white/10 bg-black/20 text-white backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-5 md:px-10">
           <VantaLogo />
-
           <nav className="hidden items-center gap-10 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/65 md:flex">
             {nav.map((item) => (
               <Link key={item.label} to={item.to} className="transition-colors hover:text-white" activeProps={{ className: "text-white" }}>
@@ -28,7 +31,6 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-
           <div className="flex items-center gap-5 text-white/80">
             <button aria-label="Buscar" className="transition-colors hover:text-white"><Search className="size-5" /></button>
             <button aria-label="Sacola" className="relative transition-colors hover:text-white">
@@ -40,7 +42,6 @@ export function SiteHeader() {
             </button>
           </div>
         </div>
-
         {open && (
           <nav className="flex flex-col gap-1 border-t border-white/10 bg-black/95 px-5 py-4 backdrop-blur-xl md:hidden">
             {nav.map((item) => (
@@ -48,20 +49,23 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+            <button onClick={openWhatsApp} className="mt-3 flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+              <MessageCircle className="size-4" />
+              Entrar em contato com VANTA
+            </button>
           </nav>
         )}
       </header>
 
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={openWhatsApp}
         aria-label="Entrar em contato com VANTA pelo WhatsApp"
         className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 rounded-full border border-white/20 bg-black px-5 py-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:bg-neutral-800 hover:shadow-black/50"
       >
         <MessageCircle className="size-5" />
         <span>Entrar em contato com VANTA</span>
-      </a>
+      </button>
     </>
   );
 }
