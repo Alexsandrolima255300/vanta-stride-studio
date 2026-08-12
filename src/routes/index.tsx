@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import heroSneaker from "@/assets/vanta-hero-sneaker.webp";
+import heroSneaker from "@/assets/shoe-black.jpg";
 import { ProductCard } from "@/components/vanta/product-card";
 import LaserFlow from "@/components/vanta/LaserFlow";
 import { Button } from "@/components/ui/button";
@@ -101,8 +101,8 @@ function Home() {
               <img
                 src={heroSneaker}
                 alt="Sneaker VANTA X1 preto com logo branca flutuando"
-                width={1000}
-                height={667}
+                width={1408}
+                height={1200}
                 className="relative w-full object-contain drop-shadow-[0_45px_55px_rgba(0,0,0,0.9)]"
               />
             </motion.div>
