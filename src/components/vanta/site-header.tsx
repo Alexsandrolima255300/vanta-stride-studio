@@ -10,13 +10,21 @@ const nav = [
   { to: "/dashboard", label: "Painel" },
 ];
 
-const whatsappUrl = "https://wa.me/5534991401087?text=Ol%C3%A1%20VANTA!%20Gostaria%20de%20entrar%20em%20contato.";
+const whatsappMessage = encodeURIComponent("Olá VANTA! Gostaria de entrar em contato.");
+const whatsappWebUrl = `https://web.whatsapp.com/send?phone=5534991401087&text=${whatsappMessage}`;
+const whatsappAppUrl = `whatsapp://send?phone=5534991401087&text=${whatsappMessage}`;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   const openWhatsApp = () => {
-    window.location.href = whatsappUrl;
+    // Primeiro tenta abrir o aplicativo oficial do WhatsApp.
+    window.location.href = whatsappAppUrl;
+
+    // Se o aplicativo não estiver disponível, abre o WhatsApp Web.
+    window.setTimeout(() => {
+      window.open(whatsappWebUrl, "_blank", "noopener,noreferrer");
+    }, 700);
   };
 
   return (
