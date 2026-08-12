@@ -147,7 +147,7 @@ function Catalogo() {
               min={200}
               max={500}
               step={10}
-              onValueChange={([v]) => setMaxPrice(v)}
+              onValueChange={([v]) => setMaxPrice(v ?? 500)}
             />
           </FilterBlock>
 
