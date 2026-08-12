@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, X, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 import { VantaLogo } from "@/components/vanta/VantaLogo";
@@ -9,6 +9,8 @@ const nav = [
   { to: "/catalogo", label: "Ofertas", search: { cat: "Ofertas" } },
   { to: "/dashboard", label: "Painel" },
 ];
+
+const whatsappUrl = "https://wa.me/5534991401087?text=Ol%C3%A1%20VANTA!%20Gostaria%20de%20entrar%20em%20contato.";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -31,7 +33,17 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-5 text-white/80">
+        <div className="flex items-center gap-3 text-white/80">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Entrar em contato com VANTA pelo WhatsApp"
+            className="hidden items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white transition-all hover:border-white/40 hover:bg-white/20 md:flex"
+          >
+            <MessageCircle className="size-4" />
+            Entrar em contato com VANTA
+          </a>
           <button aria-label="Buscar" className="transition-colors hover:text-white"><Search className="size-5" /></button>
           <button aria-label="Sacola" className="relative transition-colors hover:text-white">
             <ShoppingBag className="size-5" />
@@ -50,6 +62,16 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="mt-3 flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all hover:bg-white/20"
+          >
+            <MessageCircle className="size-4" />
+            Entrar em contato com VANTA
+          </a>
         </nav>
       )}
     </header>
