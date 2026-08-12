@@ -9,6 +9,7 @@ import { brl, type Product } from "@/lib/products";
 import TiltedCard from "@/components/vanta/TiltedCard";
 import { ShoeBrandOverlay } from "@/components/vanta/ShoeBrandOverlay";
 
+// VANTA SYNC MARKER: keep this component on the active Lovable/GitHub branch.
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [quickView, setQuickView] = useState(false);
   const lightTone = product.color === "Branco";
@@ -23,15 +24,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     >
       <div className="relative overflow-hidden rounded-sm bg-card">
         <Link to="/produto/$slug" params={{ slug: product.slug }} className="block">
-          <TiltedCard
-            imageSrc={product.image}
-            altText={product.name}
-            captionText={product.name}
-            rotateAmplitude={12}
-            scaleOnHover={1.05}
-            showMobileWarning={false}
-            showTooltip
-          />
+          <TiltedCard imageSrc={product.image} altText={product.name} captionText={product.name} rotateAmplitude={12} scaleOnHover={1.05} showMobileWarning={false} showTooltip />
           <ShoeBrandOverlay tone={lightTone ? "light" : "dark"} />
         </Link>
 
