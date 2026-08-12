@@ -3,15 +3,11 @@ import { motion } from "motion/react";
 import { Star } from "lucide-react";
 import { useState } from "react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { brl, type Product } from "@/lib/products";
 import TiltedCard from "@/components/vanta/TiltedCard";
+import { VantaLogo } from "@/components/vanta/VantaLogo";
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [quickView, setQuickView] = useState(false);
@@ -26,45 +22,25 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     >
       <div className="relative overflow-hidden rounded-sm bg-card">
         <Link to="/produto/$slug" params={{ slug: product.slug }} className="block">
-          <TiltedCard
-            imageSrc={product.image}
-            altText={product.name}
-            captionText={product.name}
-            rotateAmplitude={12}
-            scaleOnHover={1.05}
-            showMobileWarning={false}
-            showTooltip
-          />
+          <TiltedCard imageSrc={product.image} altText={product.name} captionText={product.name} rotateAmplitude={12} scaleOnHover={1.05} showMobileWarning={false} showTooltip />
         </Link>
 
+        {/* VANTA signature: a subtle embossed/engraved mark that follows the sneaker image */}
+        <div className="pointer-events-none absolute right-[12%] top-[38%] z-20 opacity-70 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-95">
+          <div className="relative rounded-full p-1.5 text-black/80 drop-shadow-[0_1px_1px_rgba(255,255,255,0.45)]">
+            <VantaLogo href={false} compact className="scale-[0.58] origin-center" />
+            <span className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.32),inset_0_-2px_3px_rgba(0,0,0,0.5)]" />
+          </div>
+        </div>
+
         <div className="pointer-events-none absolute left-4 top-4 z-20 flex gap-2">
-          {product.novo && (
-            <span className="bg-accent px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground">
-              Novo
-            </span>
-          )}
-          {product.oldPrice && (
-            <span className="bg-primary px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary-foreground">
-              Oferta
-            </span>
-          )}
-          {product.stock === 0 && (
-            <span className="bg-secondary px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-secondary-foreground">
-              Esgotado
-            </span>
-          )}
+          {product.novo && <span className="bg-accent px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground">Novo</span>}
+          {product.oldPrice && <span className="bg-primary px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary-foreground">Oferta</span>}
+          {product.stock === 0 && <span className="bg-secondary px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-secondary-foreground">Esgotado</span>}
         </div>
 
         <div className="absolute inset-x-3 bottom-3 z-30 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <Button
-            variant="secondary"
-            className="w-full rounded-sm text-xs uppercase tracking-[0.2em]"
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              setQuickView(true);
-            }}
-          >
+          <Button variant="secondary" className="w-full rounded-sm text-xs uppercase tracking-[0.2em]" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setQuickView(true); }}>
             Ver detalhes
           </Button>
         </div>
@@ -72,23 +48,12 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
-          <Link
-            to="/produto/$slug"
-            params={{ slug: product.slug }}
-            className="font-display text-lg font-bold uppercase tracking-tight"
-          >
-            {product.name}
-          </Link>
+          <Link to="/produto/$slug" params={{ slug: product.slug }} className="font-display text-lg font-bold uppercase tracking-tight">{product.name}</Link>
           <p className="text-sm text-muted-foreground">{product.tagline}</p>
-          <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-            <Star className="size-3 fill-accent text-accent" />
-            {product.rating.toFixed(1)} · {product.reviews} avaliações
-          </p>
+          <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground"><Star className="size-3 fill-accent text-accent" />{product.rating.toFixed(1)} · {product.reviews} avaliações</p>
         </div>
         <div className="text-right">
-          {product.oldPrice && (
-            <p className="text-xs text-muted-foreground line-through">{brl(product.oldPrice)}</p>
-          )}
+          {product.oldPrice && <p className="text-xs text-muted-foreground line-through">{brl(product.oldPrice)}</p>}
           <p className="font-semibold">{brl(product.price)}</p>
         </div>
       </div>
@@ -96,45 +61,18 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       <Dialog open={quickView} onOpenChange={setQuickView}>
         <DialogContent className="max-w-3xl overflow-hidden border-border bg-card p-0">
           <div className="grid md:grid-cols-2">
-            <img
-              src={product.image}
-              alt={product.name}
-              width={900}
-              height={900}
-              loading="lazy"
-              className="aspect-square w-full object-cover"
-            />
+            <div className="relative">
+              <img src={product.image} alt={product.name} width={900} height={900} loading="lazy" className="aspect-square w-full object-cover" />
+              <div className="pointer-events-none absolute right-[15%] top-[40%] opacity-70 mix-blend-soft-light"><VantaLogo href={false} compact className="scale-75" /></div>
+            </div>
             <div className="flex flex-col justify-center gap-4 p-8">
-              <DialogTitle className="font-display text-3xl font-extrabold uppercase tracking-tight">
-                {product.name}
-              </DialogTitle>
-              <DialogDescription className="text-sm text-muted-foreground">
-                {product.description}
-              </DialogDescription>
+              <DialogTitle className="font-display text-3xl font-extrabold uppercase tracking-tight">{product.name}</DialogTitle>
+              <DialogDescription className="text-sm text-muted-foreground">{product.description}</DialogDescription>
               <p className="text-2xl font-semibold">{brl(product.price)}</p>
-              <div className="flex flex-wrap gap-2">
-                {product.sizes.map((s) => (
-                  <span
-                    key={s}
-                    className="border border-border px-3 py-1.5 text-xs text-muted-foreground"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
+              <div className="flex flex-wrap gap-2">{product.sizes.map((s) => <span key={s} className="border border-border px-3 py-1.5 text-xs text-muted-foreground">{s}</span>)}</div>
               <div className="flex gap-3">
-                <Button
-                  className="flex-1 rounded-sm text-xs uppercase tracking-[0.2em]"
-                  disabled={product.stock === 0}
-                  onClick={() => setQuickView(false)}
-                >
-                  {product.stock === 0 ? "Esgotado" : "Adicionar"}
-                </Button>
-                <Button asChild variant="outline" className="rounded-sm text-xs uppercase tracking-[0.2em]">
-                  <Link to="/produto/$slug" params={{ slug: product.slug }}>
-                    Página
-                  </Link>
-                </Button>
+                <Button className="flex-1 rounded-sm text-xs uppercase tracking-[0.2em]" disabled={product.stock === 0} onClick={() => setQuickView(false)}>{product.stock === 0 ? "Esgotado" : "Adicionar"}</Button>
+                <Button asChild variant="outline" className="rounded-sm text-xs uppercase tracking-[0.2em]"><Link to="/produto/$slug" params={{ slug: product.slug }}>Página</Link></Button>
               </div>
             </div>
           </div>
