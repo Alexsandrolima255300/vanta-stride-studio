@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import heroSneaker from "@/assets/hero-sneaker.jpg";
 import { ProductCard } from "@/components/vanta/product-card";
+import LaserFlow from "@/components/vanta/LaserFlow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { products } from "@/lib/products";
@@ -43,8 +44,29 @@ function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border/60">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-8 px-5 py-16 md:grid-cols-2 md:px-10 md:py-24">
+      <section className="relative isolate min-h-[720px] overflow-hidden border-b border-border/60 bg-background">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-90">
+          <LaserFlow
+            horizontalBeamOffset={0.08}
+            verticalBeamOffset={0}
+            color="#d9dee7"
+            horizontalSizing={0.7}
+            verticalSizing={1.2}
+            wispDensity={1.1}
+            wispSpeed={9}
+            wispIntensity={1.7}
+            flowSpeed={0.32}
+            flowStrength={0.24}
+            fogIntensity={0.32}
+            fogScale={0.45}
+            fogFallSpeed={0.35}
+            decay={1.1}
+            falloffStart={1.1}
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,hsl(var(--background)/0.08)_45%,hsl(var(--background)/0.72)_100%)]" />
+        </div>
+
+        <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-8 px-5 py-16 md:min-h-[720px] md:grid-cols-2 md:px-10 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -68,7 +90,7 @@ function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-sm text-xs uppercase tracking-[0.25em]"
+                className="rounded-sm text-xs uppercase tracking-[0.25em] bg-background/40 backdrop-blur-sm"
               >
                 <Link to="/produto/$slug" params={{ slug: "vanta-x1" }}>
                   Ver o X1
@@ -83,13 +105,13 @@ function Home() {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             className="relative"
           >
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,var(--accent),transparent_65%)] opacity-25 blur-3xl" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,var(--accent),transparent_65%)] opacity-20 blur-3xl" />
             <img
               src={heroSneaker}
               alt="Sneaker VANTA X1 flutuando em fundo escuro"
               width={1408}
               height={1200}
-              className="w-full object-contain"
+              className="w-full object-contain drop-shadow-2xl"
             />
           </motion.div>
         </div>
