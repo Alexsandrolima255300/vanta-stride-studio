@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import heroSneaker from "@/assets/hero-sneaker.jpg";
+import heroSneaker from "@/assets/shoe-black.jpg";
 import { ProductCard } from "@/components/vanta/product-card";
 import LaserFlow from "@/components/vanta/LaserFlow";
 import { Button } from "@/components/ui/button";
