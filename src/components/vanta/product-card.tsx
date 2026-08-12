@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Star } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
 
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { brl, type Product } from "@/lib/products";
+import TiltedCard from "@/components/vanta/TiltedCard";
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const [quickView, setQuickView] = useState(false);
@@ -25,18 +25,19 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       className="group relative"
     >
       <div className="relative overflow-hidden rounded-sm bg-card">
-        <Link to="/produto/$slug" params={{ slug: product.slug }}>
-          <img
-            src={product.image}
-            alt={product.name}
-            width={900}
-            height={900}
-            loading="lazy"
-            className="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        <Link to="/produto/$slug" params={{ slug: product.slug }} className="block">
+          <TiltedCard
+            imageSrc={product.image}
+            altText={product.name}
+            captionText={product.name}
+            rotateAmplitude={12}
+            scaleOnHover={1.05}
+            showMobileWarning={false}
+            showTooltip
           />
         </Link>
 
-        <div className="pointer-events-none absolute left-4 top-4 flex gap-2">
+        <div className="pointer-events-none absolute left-4 top-4 z-20 flex gap-2">
           {product.novo && (
             <span className="bg-accent px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground">
               Novo
@@ -54,11 +55,15 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           )}
         </div>
 
-        <div className="absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="absolute inset-x-3 bottom-3 z-30 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <Button
             variant="secondary"
             className="w-full rounded-sm text-xs uppercase tracking-[0.2em]"
-            onClick={() => setQuickView(true)}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setQuickView(true);
+            }}
           >
             Ver detalhes
           </Button>
@@ -121,7 +126,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
                 <Button
                   className="flex-1 rounded-sm text-xs uppercase tracking-[0.2em]"
                   disabled={product.stock === 0}
-                  onClick={() => toast.success(`${product.name} adicionado à sacola`)}
+                  onClick={() => setQuickView(false)}
                 >
                   {product.stock === 0 ? "Esgotado" : "Adicionar"}
                 </Button>
