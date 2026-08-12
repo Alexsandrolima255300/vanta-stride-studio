@@ -2,12 +2,7 @@ import { useCallback, useEffect, useRef, type CSSProperties, type MouseEvent, ty
 
 type Easing = "linear" | "ease-in" | "ease-in-out" | "ease-out";
 
-type Spark = {
-  x: number;
-  y: number;
-  angle: number;
-  startTime: number;
-};
+type Spark = { x: number; y: number; angle: number; startTime: number };
 
 type ClickSparkProps = {
   sparkColor?: string;
@@ -65,21 +60,14 @@ export default function ClickSpark({
     };
   }, []);
 
-  const easeFunc = useCallback(
-    (t: number) => {
-      switch (easing) {
-        case "linear":
-          return t;
-        case "ease-in":
-          return t * t;
-        case "ease-in-out":
-          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-        default:
-          return t * (2 - t);
-      }
-    },
-    [easing],
-  );
+  const easeFunc = useCallback((t: number) => {
+    switch (easing) {
+      case "linear": return t;
+      case "ease-in": return t * t;
+      case "ease-in-out": return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      default: return t * (2 - t);
+    }
+  }, [easing]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -88,7 +76,6 @@ export default function ClickSpark({
     if (!ctx) return;
 
     let animationId = 0;
-
     const draw = (timestamp: number) => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -97,7 +84,6 @@ export default function ClickSpark({
       sparksRef.current = sparksRef.current.filter((spark) => {
         const elapsed = timestamp - spark.startTime;
         if (elapsed >= duration) return false;
-
         const progress = Math.max(0, Math.min(1, elapsed / duration));
         const eased = easeFunc(progress);
         const distance = eased * sparkRadius * extraScale;
@@ -116,7 +102,6 @@ export default function ClickSpark({
         ctx.lineTo(x2, y2);
         ctx.stroke();
         ctx.globalAlpha = 1;
-
         return true;
       });
 
@@ -130,26 +115,19 @@ export default function ClickSpark({
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const rect = canvas.getBoundingClientRect();
+    const now = performance.now();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    const now = performance.now();
-
-    sparksRef.current.push(
-      ...Array.from({ length: sparkCount }, (_, index) => ({
-        x,
-        y,
-        angle: (2 * Math.PI * index) / sparkCount,
-        startTime: now,
-      })),
-    );
+    sparksRef.current.push(...Array.from({ length: sparkCount }, (_, index) => ({
+      x, y, angle: (2 * Math.PI * index) / sparkCount, startTime: now,
+    })));
   };
 
   const wrapperStyle: CSSProperties = {
     position: "relative",
     width: "100%",
-    height: "100%",
+    minHeight: "100vh",
   };
 
   return (
