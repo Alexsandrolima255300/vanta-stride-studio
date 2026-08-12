@@ -51,7 +51,7 @@ function Home() {
             transition={{ duration: 0.7 }}
           >
             <p className="text-xs uppercase tracking-[0.35em] text-accent">Coleção 2026</p>
-            <h1 className="display-xl mt-5 text-[clamp(3.5rem,11vw,8.5rem)]">
+            <h1 className="display-xl mt-5 text-[clamp(3rem,8vw,6.5rem)]">
               Move
               <br />
               Different.
