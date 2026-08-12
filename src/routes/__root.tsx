@@ -13,8 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/vanta/site-header";
 import { SiteFooter } from "@/components/vanta/site-footer";
+import ClickSpark from "@/components/vanta/ClickSpark";
 import { Toaster } from "@/components/ui/sonner";
-
 
 function NotFoundComponent() {
   return (
@@ -48,9 +48,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -82,24 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "VANTA — Premium Sneakers" },
-      {
-        name: "description",
-        content: "Marca fictícia de sneakers premium: corrida, casual e skate.",
-      },
+      { name: "description", content: "Marca fictícia de sneakers premium: corrida, casual e skate." },
       { name: "author", content: "VANTA" },
       { property: "og:title", content: "VANTA — Premium Sneakers" },
-      {
-        property: "og:description",
-        content: "Marca fictícia de sneakers premium: corrida, casual e skate.",
-      },
+      { property: "og:description", content: "Marca fictícia de sneakers premium: corrida, casual e skate." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -135,16 +124,23 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col font-sans">
-        <SiteHeader />
-        <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <SiteFooter />
-      </div>
+      <ClickSpark
+        sparkColor="#ffffff"
+        sparkSize={8}
+        sparkRadius={18}
+        sparkCount={8}
+        duration={420}
+        extraScale={1.05}
+      >
+        <div className="flex min-h-screen flex-col font-sans">
+          <SiteHeader />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </div>
+      </ClickSpark>
       <Toaster position="bottom-right" />
     </QueryClientProvider>
-
   );
 }
